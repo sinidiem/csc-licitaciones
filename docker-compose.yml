@@ -1,0 +1,31 @@
+# PostgreSQL para desarrollo (CONTEXT.md: "PostgreSQL corriendo en Docker").
+#
+# El contenedor de dev local ya existente (`pg-licitaciones`) cubre este mismo
+# servicio; este archivo permite reproducirlo de cero en otra máquina o VPS:
+#   docker compose up -d db
+# Debe coincidir con DATABASE_URL del backend/.env.
+#
+# En producción el stack completo (backend + db + cron) se orquesta con
+# docker compose según la sección "Despliegue e Infraestructura" de CONTEXT.md.
+
+services:
+  db:
+    image: postgres:18
+    container_name: pg-licitaciones
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: licitaciones_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d licitaciones_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:

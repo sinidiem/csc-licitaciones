@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Entorno y secretos (nunca versionar)
+.env
+
+# Storage local de propuestas (dev; decisión CONTEXT.md §11.2)
+.storage/
+
+# Herramientas / OS
+.DS_Store
+.idea/
+.vscode/

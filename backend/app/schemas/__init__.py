@@ -1,0 +1,1 @@
+"""Esquemas Pydantic de request/response (se completan con los endpoints)."""

@@ -1,0 +1,23 @@
+# Nada de esto entra a la imagen de despliegue (Dockerfile raíz).
+# Los secretos NUNCA viajan en la imagen: en runtime llegan por env/secretos.
+
+.git
+**/.env
+**/.env.*
+!.env.example
+backend/venv
+backend/.venv
+backend/.storage
+**/__pycache__
+**/*.pyc
+*.pyc
+*.tsbuildinfo
+frontend/node_modules
+frontend/.next
+e2e
+docs
+LOG.md
+AGENTS.md
+CONTEXT.md
+README.md
+scripts

@@ -1,0 +1,1 @@
+"""API v1. Todos los recursos bajo el prefijo /api/v1 (CONTEXT.md §5)."""
