@@ -109,9 +109,11 @@ reglas de negocio) y `docs/ARQUITECTURA.md` (diseño y decisiones).
 - **Listo y verificado en local**: funcionalidad completa (ciclo
   borrador → cobrada), reglas de negocio en BD + app + pruebas,
   automatismos, email y storage reales, seguridad por capas, documentación.
-- **En curso**: despliegue en Render (un solo origen) con Postgres y
-  Storage en Supabase y cron externo — runbook en `docs/DEPLOY.md`
-  (requiere cuentas de Render/Supabase; pendiente de ejecutar).
-- **Al final del proceso**: repositorio público en GitHub y evidencias del
-  entorno desplegado (recorrido real, registro del cron, correos
-  `delivered` del despliegue), separadas de las evidencias locales.
+- **Desplegado en producción (2026-10-08)**: Render (un solo origen,
+  https://csc-licitaciones.onrender.com, commit `c354c00`) con Postgres y
+  Storage en Supabase — verificado en vivo (login, CRUD, job interno,
+  Swagger oculto en prod). Evidencias en
+  `docs/evidencias/dia10_desplegado.md`.
+- **En curso**: cron externo ejecutándose (cada 30-60 min) y evidencias
+  del recorrido borrador → cobrada en el entorno desplegado (capturas
+  separadas de las locales).
