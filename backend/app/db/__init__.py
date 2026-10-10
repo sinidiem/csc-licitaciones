@@ -1,0 +1,1 @@
+"""Capa de base de datos: engine y acceso a sesiones."""

@@ -1,0 +1,43 @@
+# render.yaml — despliegue CSC en Render (un solo origen, CONTEXT §11.10).
+#
+# Este blueprint se conecta a un repo git (GitHub/GitLab). Alternativa sin
+# git: empujar la imagen construida localmente a Docker Hub y crear el web
+# service desde el dashboard ("Deploy from image"), con las MISMA variables.
+#
+# Los secrets (sync: false) se fijan en el dashboard de Render, nunca aquí.
+
+services:
+  - type: web
+    name: csc-licitaciones
+    runtime: docker
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /login
+    plan: free
+
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: HOSTNAME
+        value: "0.0.0.0"
+      - key: PORT
+        value: "3000"
+      # --- secretos (definir en el dashboard de Render) ---
+      - key: SECRET_KEY
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_TEST_TO
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: CRON_SECRET
+        sync: false
+      - key: DATABASE_URL
+        sync: false

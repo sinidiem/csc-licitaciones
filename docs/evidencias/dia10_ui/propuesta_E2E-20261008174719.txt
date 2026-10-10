@@ -1,0 +1,4 @@
+Propuesta de prueba E2E — datos ficticios
+Cliente: Cliente UI E2E-20261008174719
+Referencia: LTC-20261008174719
+Generado: 2026-10-08T17:47:19.023Z
