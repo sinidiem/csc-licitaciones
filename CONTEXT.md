@@ -384,7 +384,10 @@ La secuencia apunta al plazo del reto, no constituye garantía de disponibilidad
     Impacto (este mismo trabajo): `Dockerfile` (multi-etapa, raíz) +
     `render.yaml` + `deploy/entrypoint.sh` + `.dockerignore`; rewrites
     `/internal/*`, `/docs`, `/openapi.json` en el frontend; runbook en
-    `docs/DEPLOY.md`. Evidencia del desplegado SEPARADA de la local.
+    `docs/DEPLOY.md`. **ESTADO: DESPLEGADO el 2026-10-08** en
+    https://csc-licitaciones.onrender.com (commit `c354c00`); pendiente:
+    cron externo ejecutándose y evidencias del recorrido UI en este
+    entorno (docs/evidencias/dia10_desplegado.md).
 
 ## 12. Convenciones para mantener contexto
 

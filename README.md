@@ -43,6 +43,17 @@ Abrir **http://localhost:3000**. Credenciales de demo:
 > `RESEND_API_KEY`, `SUPABASE_URL/SERVICE_KEY` y `CRON_SECRET` van en el
 > entorno, nunca en el repo (`.env` está en `.gitignore`).
 
+## Desplegado en producción
+
+**https://csc-licitaciones.onrender.com** — Render (plan free, un solo
+origen: API + frontend en un contenedor) + Postgres/Storage en Supabase +
+cron externo. Detalles, secrets y runbook en `docs/DEPLOY.md`; evidencias
+del entorno desplegado en `docs/evidencias/dia10_desplegado.md`.
+
+El frontend llama al backend por el mismo origen (rewrite de Next), así que
+la cookie JWT funciona igual que en local. El Swagger/OpenAPI queda oculto
+en producción (regla de seguridad) y visible en dev (`/docs` en local).
+
 ## Verificación (evidencia, no "compila = listo")
 
 | Capa | Resultado |
@@ -92,7 +103,7 @@ soft delete).
 | Día | Estado |
 |---|---|
 | 1-8 | ✔ Completado y verificado (modelo, API, reglas, email, jobs, storage) |
-| 9-10 | ◐ Frontend + E2E + evidencias locales listos; **en curso**: despliegue en Render (un solo origen, CONTEXT §11.10, runbook `docs/DEPLOY.md`), cron externo, evidencias del entorno real, remoto git + CI |
+| 9-10 | ◐ Frontend + E2E + evidencias locales listos; **desplegado en Render** (https://csc-licitaciones.onrender.com, commit `c354c00`); falta: cron externo ejecutado y evidencias del recorrido en el entorno real |
 
 ## Fuera de alcance (decisiones conscientes)
 
