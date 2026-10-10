@@ -10,7 +10,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const EVID = path.resolve(__dirname, "../../docs/evidencias/dia10_ui");
+const EVID =
+  process.env.UI_EVID || path.resolve(__dirname, "../../docs/evidencias/dia10_ui");
 const BASE = process.env.UI_URL || "http://127.0.0.1:3000";
 const EMAIL = process.env.UI_USER || "ui.demo@csc.dev";
 const PASS = process.env.UI_PASS || "Uitest123!";

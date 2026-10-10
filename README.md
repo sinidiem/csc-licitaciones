@@ -103,7 +103,7 @@ soft delete).
 | Día | Estado |
 |---|---|
 | 1-8 | ✔ Completado y verificado (modelo, API, reglas, email, jobs, storage) |
-| 9-10 | ◐ Frontend + E2E + evidencias locales listos; **desplegado en Render** (https://csc-licitaciones.onrender.com, commit `c354c00`); falta: cron externo ejecutado y evidencias del recorrido en el entorno real |
+| 9-10 | ✔ Frontend + E2E + evidencias locales y del desplegado; **producción en Render** (https://csc-licitaciones.onrender.com), cron externo en marcha (cron-job.org, 200 OK) |
 
 ## Fuera de alcance (decisiones conscientes)
 

@@ -22,11 +22,23 @@ Entorno real de producción, separado de las evidencias locales
 | `POST /internal/jobs/tenders` sin secreto | 401 |
 | Migraciones + seed al primer arranque | OK (Alembic contra el Postgres de Supabase, idempotente) |
 
-## Pendiente de esta fase
+## Cron externo (cron-job.org)
 
-- **Cron real disparando el job** (cada 30-60 min): GitHub Actions
-  `schedule:` o cron-job.org → `POST {URL}/internal/jobs/tenders` con
-  `X-Cron-Secret`; guardar registro de ejecución y un resultado real
-  (vencido/recordatorio con correo `delivered`).
-- **Recorrido borrador → cobrada** en la UI desplegada (capturas) y
-  verificación de descarga de propuesta vía URL firmada en este entorno.
+Job activo: `POST https://csc-licitaciones.onrender.com/internal/jobs/tenders`
+con cabecera `X-Cron-Secret`, cada 30 minutos. Ejecución de prueba: **HTTP
+200** con respuesta `{"expired":0,"reminders_sent":0,"reminders_failed":0,
+"reminders_duplicated":0,"reminders_skipped_no_client":0}` (el endpoint
+devuelve ~110 bytes, muy por debajo del límite del proveedor). Captura del
+panel: `cron-job-verificacion.png`. La respuesta de contadores se verifica
+además en cada ejecución programada desde el historial del proveedor.
+
+## Recorrido borrador → cobrada en el entorno desplegado
+
+E2E de Playwright ejecutado contra la URL de producción (mismo script que
+el local, con `UI_URL` apuntando al desplegado): **15/15 verificaciones,
+8 capturas** en `ui/`, y se disparó un correo REAL de Resend desde
+producción al buzón sandbox con la propuesta adjunta. Detalle del flujo:
+cliente nuevo (buzón sandbox) → producto → borrador → partida (total
+625,00) → propuesta subida al bucket (URL firmada) → enviada (correo) →
+finalizada → facturada → pago total → cobrada; historial completo
+(Borrador → Activa → Finalizada → Por cobrar → Cobrada) y listado final.

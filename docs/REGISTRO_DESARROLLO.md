@@ -110,10 +110,13 @@ reglas de negocio) y `docs/ARQUITECTURA.md` (diseño y decisiones).
   borrador → cobrada), reglas de negocio en BD + app + pruebas,
   automatismos, email y storage reales, seguridad por capas, documentación.
 - **Desplegado en producción (2026-10-08)**: Render (un solo origen,
-  https://csc-licitaciones.onrender.com, commit `c354c00`) con Postgres y
-  Storage en Supabase — verificado en vivo (login, CRUD, job interno,
-  Swagger oculto en prod). Evidencias en
-  `docs/evidencias/dia10_desplegado.md`.
-- **En curso**: cron externo ejecutándose (cada 30-60 min) y evidencias
-  del recorrido borrador → cobrada en el entorno desplegado (capturas
-  separadas de las locales).
+  https://csc-licitaciones.onrender.com) con Postgres y Storage en
+  Supabase — verificado en vivo (login, CRUD, job interno, Swagger oculto
+  en prod). Evidencias en `docs/evidencias/dia10_desplegado.md`.
+- **Cron externo en marcha (cron-job.org, cada 30 min)**: 200 OK con
+  contadores; captura en `docs/evidencias/dia10_desplegado/`.
+- **Recorrido completo en el entorno desplegado**: E2E 15/15 con 8
+  capturas (`docs/evidencias/dia10_desplegado/ui/`) y correo real de
+  Resend disparado desde producción.
+- **Cierre limpio**: nada pendiente salvo mantener la ejecución del cron
+  (y opcionalmente desactivar Auto-Deploy de Render para pushes de docs).
