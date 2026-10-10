@@ -1,6 +1,6 @@
 """Mixins y utilidades compartidas para los modelos SQLModel.
 
-Convenciones CONTEXT.md (sección 3):
+Convenciones (sección 3):
 - UUID como identificador.
 - timestamptz (UTC) para fechas.
 - Decimal para importes (nunca float).

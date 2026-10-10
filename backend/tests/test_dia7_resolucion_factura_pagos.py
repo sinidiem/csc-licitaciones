@@ -1,7 +1,7 @@
 """Pruebas del día 7 del plan: resolución (finish/lose), factura y cobros.
 
 Cubre la matriz de transiciones (409 INVALID_STATUS_TRANSITION), el registro
-de factura con importe distinto del total (decisión CONTEXT.md §11.3), los
+de factura con importe distinto del total (decisión ), los
 pagos parciales sin sobrepago (422 OVERPAYMENT), la transición automática a
 `collected` al saldar y el bloqueo de partidas en estados terminales.
 

@@ -1,4 +1,4 @@
-"""Endpoints de productos: creación y listado (API mínima CONTEXT.md).
+"""Endpoints de productos: creación y listado (API mínima ).
 
 El precio en el catálogo es de referencia; la licitación conserva el precio
 acordado en la partida (tender_items.unit_price).

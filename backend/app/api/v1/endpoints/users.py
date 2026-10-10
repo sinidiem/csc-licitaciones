@@ -1,6 +1,6 @@
 """Endpoint de usuarios: listado y creación.
 
-Regla CONTEXT.md: solo los admins pueden crear otros usuarios.
+Regla : solo los admins pueden crear otros usuarios.
 El rol solo lo asigna el admin; el usuario normal se crea con rol "user".
 """
 

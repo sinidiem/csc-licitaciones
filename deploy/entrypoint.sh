@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Entrada del contenedor de despliegue (un solo origen, decisión CONTEXT
+# Entrada del contenedor de despliegue (un solo origen, decisión de despliegue
 # §11.10): prepara la BD (migraciones + seed, idempotentes), arranca la API
 # en :8000 y el frontend standalone en :3000.
 #

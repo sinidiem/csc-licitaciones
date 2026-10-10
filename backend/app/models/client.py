@@ -14,7 +14,7 @@ class Client(SQLModel, AuditMixin, UuidPkMixin, table=True):
     __tablename__ = "clients"
 
     name: str = Field(sa_column=Column(String(200), nullable=False, index=True))
-    # Obligatorio para el envío oficial (regla CONTEXT.md §5). Un correo de
+ # Obligatorio para el envío oficial (regla ). Un correo de
     # empresa = un cliente: único en BD + validación en app (409).
     company_email: str = Field(
         sa_column=Column(String(320), nullable=False, unique=True, index=True)
@@ -25,7 +25,7 @@ class Client(SQLModel, AuditMixin, UuidPkMixin, table=True):
     # Soft delete (borrado lógico): la fila permanece en BD (licitaciones y
     # auditoría intactas) pero no aparece en listas ni en la web. La unicidad
     # del correo sigue aplicando a TODAS las filas, borradas incluidas.
-    # Decisión registrada en CONTEXT.md (2026-10-08).
+ # Decisión registrada en (2026-10-08).
     deleted_at: Optional[AwareDatetime] = Field(default=None, index=True)
 
     tenders: List["Tender"] = Relationship(back_populates="client")

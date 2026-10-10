@@ -1,6 +1,6 @@
 # DESPLIEGUE — runbook (Render + Supabase, un solo origen)
 
-Decisión registrada en CONTEXT.md §11.10 (2026-10-08): la app completa
+Decisión de despliegue (2026-10-08): la app completa
 (API + frontend) en RENDER como UN web service de un solo origen (uvicorn
 :8000 + Next.js standalone :3000 en el mismo contenedor), Postgres y
 Storage en SUPABASE (proyecto ya contratado), cron EXTERNO (cron-job.org;

@@ -16,7 +16,7 @@ htmlcov/
 .env.*
 !.env.example
 
-# Storage local de propuestas (dev; decisión CONTEXT.md §11.2)
+# Storage local de propuestas (dev, gitignorado)
 .storage/
 
 # Frontend (Next.js)
@@ -32,4 +32,4 @@ LOG.md
 # Herramientas / OS
 .DS_Store
 .idea/
-.vscode/
+.vscode/CONTEXT.md

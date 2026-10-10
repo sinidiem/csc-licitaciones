@@ -1,9 +1,9 @@
 """Servicios de dominio de licitaciones.
 
-Reglas de negocio implementadas aquí (CONTEXT.md §4 y plan §3-4):
+Reglas de negocio implementadas aquí ( §4 y plan §3-4):
 - SUM(items.quantity * unit_price) <= budget_max, validado en transacción
   con FOR UPDATE sobre la licitación para evitar carreras concurrentes.
-- Partidas SOLO editables en `draft` (decisión registrada en CONTEXT.md
+- Partidas SOLO editables en `draft` (decisión registrada en
   §11.1 y LOG.md). Los estados terminales (finished, to_collect, collected,
   lost) y `active` rechazan agregar/quitar partidas.
 - La creación y cada transición registran `tender_status_history` en la
@@ -34,7 +34,7 @@ def current_total(session: Session, tender_id: uuid.UUID) -> Decimal:
 
 
 def _require_editable(tender: Tender) -> None:
-    """Regla: partidas solo editables en borrador (decisión CONTEXT.md §11)."""
+    """Regla: partidas solo editables en borrador (decisión §11)."""
     if tender.status != TenderStatus.DRAFT.value:
         raise business_error(
             409,

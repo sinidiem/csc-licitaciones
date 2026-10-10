@@ -3,7 +3,7 @@ fastapi==0.142.2
 uvicorn[standard]==0.54.0
 pydantic==2.13.5
 
-# --- ORM y migraciones (stack CONTEXT.md) ---
+# --- ORM y migraciones (stack del proyecto) ---
 sqlmodel==0.0.47
 alembic==1.20.0
 psycopg2-binary==2.9.13
@@ -13,7 +13,7 @@ pydantic-settings==2.15.0
 python-dotenv==1.2.4
 
 # --- Integraciones ---
-# Email transaccional (patrón outbox, CONTEXT.md §4). SDK 2.x: clase Emails.send.
+# Email transaccional (patrón outbox). SDK 2.x: clase Emails.send.
 resend==2.49.1
 # Multipart/upload de propuestas (POST /tenders/{id}/proposal, día 5).
 python-multipart==0.0.32
@@ -25,7 +25,7 @@ argon2-cffi==25.1.0
 PyJWT==2.15.1
 email-validator==2.3.0
 
-# --- Testing (CONTEXT.md §5) ---
+# --- Testing ---
 pytest==8.3.5
 pytest-cov==6.0.0
 httpx==0.28.1   # TestClient de FastAPI para pruebas de API

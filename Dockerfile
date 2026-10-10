@@ -2,7 +2,7 @@
 # CSC — imagen de despliegue (un solo origen: API + frontend).
 #   docker build -t csc:latest .
 # Runtime: uvicorn :8000 (API) y Next.js standalone :3000 (UI), ambos tras un
-# mismo dominio https (cookie JWT misma-origen; decisión CONTEXT §11.10).
+# mismo dominio https (cookie JWT misma-origen; decisión de despliegue).
 # Los secretos entran por variables de entorno del despliegue, nunca en la
 # imagen (.dockerignore excluye .env).
 # ============================================================================
@@ -50,6 +50,7 @@ RUN chmod +x /app/entrypoint.sh
 WORKDIR /app
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=90s \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:3000/login', timeout=4); urllib.request.urlopen('http://127.0.0.1:8000/api/v1/auth/me?x=1', timeout=4)" >/dev/null 2>&1 || exit 1
+  CMD python -c "import urllib.request, urllib.error; req=urllib.request.Request('http://127.0.0.1:8000/api/auth/login',data=b'{}',headers={'Content-Type':'application/json'},method='POST'); urllib.request.urlopen(req,timeout=4)" >/dev/null 2>&1 || \
+  python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:3000/login',timeout=4)" >/dev/null 2>&1 || exit 1
 
 CMD ["/app/entrypoint.sh"]

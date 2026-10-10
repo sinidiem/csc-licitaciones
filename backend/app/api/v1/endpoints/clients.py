@@ -4,7 +4,7 @@ Cualquier usuario autenticado puede gestionar clientes; la auditoría
 (created_by/updated_by) registra quién. El borrado es SOFT DELETE
 (`deleted_at`): la fila permanece en BD (licitaciones, historial y
 auditoría intactos) pero no aparece en listas ni en la web, y no pueden
-crearse licitaciones nuevas para él. Decisión CONTEXT.md (2026-10-08).
+crearse licitaciones nuevas para él. Decisión (2026-10-08).
 
 El correo de empresa sigue siendo único en BD (incluidos los borrados):
 no se puede re-crear un cliente con el correo de uno eliminado.

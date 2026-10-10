@@ -1,4 +1,4 @@
-"""Jobs programados (CONTEXT.md §6): vencimientos y recordatorios 48h.
+"""Jobs programados ( §6): vencimientos y recordatorios 48h.
 
 Endpoints internos invocados por el cron del VPS (nunca expuestos al
 público; autenticación por secreto con comparación segura en la capa API).
@@ -133,7 +133,7 @@ def _send_reminders(session: Session, now: datetime) -> dict:
 
     sent = failed = 0
     for outbox, tender_id in scheduled:
-        # Envío real FUERA de la transacción (patrón outbox, CONTEXT.md §4).
+ # Envío real FUERA de la transacción (patrón outbox, ).
         dispatched = email_service.dispatch_outbox(session, outbox)
         if dispatched.status != "sent":
             failed += 1

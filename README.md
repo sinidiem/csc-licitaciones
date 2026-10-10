@@ -90,10 +90,8 @@ y las decisiones defendibles (matriz de estados con historial en la misma
 transacción, locks `FOR UPDATE`, outbox, URL firmada, seguridad por capas,
 soft delete).
 
-- `CONTEXT.md` — fuente de requisitos: modelo, reglas de negocio, matriz de
-  transiciones, plan y decisiones registradas (con fecha y motivo).
-- `docs/REGISTRO_DESARROLLO.md` — bitácora de desarrollo y evidencias
-  (IDs de correos deliverados, etc.).
+- `docs/REGISTRO_DESARROLLO.md` — bitácora del proyecto: decisiones, estado,
+  evidencias e historial
 - `docs/MANUAL_USUARIO.md` — manual para usuarios finales.
 - `docs/revision/` — informes de la revisión de calidad (especificaciones,
   código, QA exploratorio).
@@ -103,7 +101,7 @@ soft delete).
 | Día | Estado |
 |---|---|
 | 1-8 | ✔ Completado y verificado (modelo, API, reglas, email, jobs, storage) |
-| 9-10 | ◐ Frontend + E2E + evidencias locales listos; **desplegado en Render** (https://csc-licitaciones.onrender.com, commit `c354c00`); falta: cron externo ejecutado y evidencias del recorrido en el entorno real |
+| 9-10 | ✔ Frontend + E2E + evidencias locales y del desplegado; **producción en Render** (https://csc-licitaciones.onrender.com), cron externo en marcha (cron-job.org, 200 OK) |
 
 ## Fuera de alcance (decisiones conscientes)
 
@@ -113,7 +111,7 @@ multi-tenant/ownership por comercial, paginación visual del listado,
 rate limiting/cron para multi-worker (Redis), CI y remoto git (casi al
 final, decisión del usuario). El despliegue —VPS propio o gestionado— está
 pendiente de elegir: ver `docs/ARQUITECTURA.md` (Despliegue) y
-`CONTEXT.md` §11.10.
+`docs/DEPLOY.md`.
 
 ## Estructura
 
@@ -122,7 +120,7 @@ backend/     FastAPI + SQLModel + Alembic (endpoints, services, models, tests)
 frontend/    Next.js (App Router, api.ts, e2e Playwright)
 scripts/     bootstrap.sh (arranque de cero, idempotente)
 docs/        MANUAL_USUARIO.md, ARQUITECTURA.md, revision/, evidencias/
-CONTEXT.md   requisitos y decisiones · AGENTS.md reglas del repo · LOG.md bitácora
+README.md   qué es y cómo arranca · docs/   documentación completa
 ```
 
 Más detalles de instalación y endpoints en `backend/README.md` y

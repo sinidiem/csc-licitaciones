@@ -1,4 +1,4 @@
-"""Seed controlado del primer admin (CONTEXT.md plan, día 2).
+"""Seed controlado del primer admin ( plan, día 2).
 
 Crea el usuario admin inicial si no existe. Es idempotente: si el email ya
 existe, no hace nada y avisa.

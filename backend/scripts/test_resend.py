@@ -9,7 +9,7 @@ O mejor: pon RESEND_API_KEY y RESEND_TEST_TO en el .env (gitignored) y ejecuta:
 Qué hace:
 1. Envía un correo de prueba real vía el servicio outbox (app.services.email).
 2. Muestra el id del proveedor (evidencia verificable) y el estado en BD.
-No imprime ni guarda la API key. Según CONTEXT.md §8, el email requiere
+No imprime ni guarda la API key. Según , el email requiere
 evidencia del entorno real: el provider_message_id mostrado aquí es esa
 evidencia.
 """

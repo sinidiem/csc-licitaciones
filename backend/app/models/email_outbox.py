@@ -1,6 +1,6 @@
 """Entidad email_outbox: persistencia del patrón Outbox para correos.
 
-CONTEXT.md §4: el envío de email tiene un efecto externo imposible de incluir
+reglas de negocio §4: el envío de email tiene un efecto externo imposible de incluir
 en una transacción SQL. Este tabla permite recuperación segura: se registra
 intención (pending), se confirma (sent) o se marca fallo (failed) con
 reintentos, sin duplicar envíos ante timeouts ambiguos.

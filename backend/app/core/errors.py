@@ -1,6 +1,6 @@
 """Errores de negocio con códigos estables para la API.
 
-CONTEXT.md plan §4: los errores de negocio llevan un código estable
+plan §4: los errores de negocio llevan un código estable
 (p. ej. INVALID_STATUS_TRANSITION) además del mensaje, para que el
 frontend pueda actuar de forma determinista.
 """

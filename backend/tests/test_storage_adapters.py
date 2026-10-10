@@ -1,4 +1,4 @@
-"""Tests unitarios del adaptador de storage (CONTEXT.md §11.2) — sin red real.
+"""Tests unitarios del adaptador de storage ( §11.2) — sin red real.
 
 - LocalStorageAdapter: upload/get_bytes/errores 404 y URL firmada no
   disponible (409 SIGNED_URL_UNAVAILABLE).

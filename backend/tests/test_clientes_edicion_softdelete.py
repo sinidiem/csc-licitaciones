@@ -1,4 +1,4 @@
-"""Edición y borrado lógico de clientes (decisión 2026-10-08, CONTEXT.md).
+"""Edición y borrado lógico de clientes (decisión 2026-10-08, ).
 
 Cubre:
 - PATCH /clients/{id}: actualización parcial, unicidad de correo (409),

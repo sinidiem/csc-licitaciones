@@ -1,6 +1,6 @@
 """Entidad tenders: la licitación, corazón del dominio.
 
-Estados (códigos ingleses en BD, mapeo documentado en CONTEXT.md §3.1):
+Estados (códigos ingleses en BD, mapeo documentado en ):
 - draft       -> borrador (implícito, antes de enviar)
 - active      -> activa (enviada oficialmente)
 - finished    -> finalizada (ganada y entregada)
@@ -46,7 +46,7 @@ class TenderStatus(str, Enum):
 
 STATUS_ALLOWED = tuple(s.value for s in TenderStatus)
 
-# Transiciones válidas (CONTEXT.md "Tabla de Transiciones"): cualquier otra
+# Transiciones válidas ("Tabla de Transiciones"): cualquier otra
 # combinación debe rechazarse con error (HTTP 409 INVALID_STATUS_TRANSITION).
 VALID_TRANSITIONS: dict[TenderStatus, set[TenderStatus]] = {
     TenderStatus.DRAFT: {TenderStatus.ACTIVE},

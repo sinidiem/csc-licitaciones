@@ -1,4 +1,4 @@
-# render.yaml — despliegue CSC en Render (un solo origen, CONTEXT §11.10).
+# render.yaml — despliegue CSC en Render (un solo origen, ver docs/DEPLOY.md).
 #
 # Este blueprint se conecta a un repo git (GitHub/GitLab). Alternativa sin
 # git: empujar la imagen construida localmente a Docker Hub y crear el web

@@ -1,6 +1,6 @@
 """Seguridad: hash de contraseñas (Argon2id) y JWT en cookie HttpOnly.
 
-CONTEXT.md: "JWT en cookie HttpOnly, Secure en producción, SameSite
+: "JWT en cookie HttpOnly, Secure en producción, SameSite
 adecuado; contraseñas con Argon2id". El token solo vive en la cookie:
 el frontend nunca lo lee (protección contra XSS).
 """

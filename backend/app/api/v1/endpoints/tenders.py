@@ -244,7 +244,7 @@ async def upload_proposal(
 ) -> TenderDetail:
     """Carga multipart de la propuesta: validación + storage + metadata.
 
-    CONTEXT.md §7: valida extensión/tamaño/MIME, nombre de objeto aleatorio,
+    §7: valida extensión/tamaño/MIME, nombre de objeto aleatorio,
     bucket privado. Permite reemplazar la propuesta actual SOLO en `draft`
     (decisión §11.1: estados posteriores congelan las partidas y la propuesta).
     En `active`/terminales se rechaza (409).
@@ -261,7 +261,7 @@ async def upload_proposal(
     content = await storage_service.read_uploaded(file)
     ext = storage_service.validate_upload(file.filename or "", content)
 
-    # MIME: debe corresponder exactamente a la extensión (CONTEXT.md §7).
+ # MIME: debe corresponder exactamente a la extensión ().
     mimes: dict[str, str] = {
         "pdf": "application/pdf",
         "doc": "application/msword",
@@ -340,7 +340,7 @@ def download_proposal(tender_id: uuid.UUID, user: CurrentUser, session: SessionD
 
 @router.get("/{tender_id}/proposal/download/signed", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
 def download_proposal_signed(tender_id: uuid.UUID, user: CurrentUser, session: SessionDep):
-    """URL firmada de corta duración cuando el storage es Supabase (CONTEXT.md §7).
+    """URL firmada de corta duración cuando el storage es Supabase ( §7).
 
     Redirige al objeto firmado para que el navegador lo abra/descargue
     directamente desde Supabase; el enlace expira (default 900 s). Solo

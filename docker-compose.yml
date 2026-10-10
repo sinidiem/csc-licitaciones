@@ -1,4 +1,4 @@
-# PostgreSQL para desarrollo (CONTEXT.md: "PostgreSQL corriendo en Docker").
+# PostgreSQL para desarrollo (corriendo en Docker para el entorno local).
 #
 # El contenedor de dev local ya existente (`pg-licitaciones`) cubre este mismo
 # servicio; este archivo permite reproducirlo de cero en otra máquina o VPS:
@@ -6,7 +6,7 @@
 # Debe coincidir con DATABASE_URL del backend/.env.
 #
 # En producción el stack completo (backend + db + cron) se orquesta con
-# docker compose según la sección "Despliegue e Infraestructura" de CONTEXT.md.
+# las variables de entorno necesarias para el despliegue.
 
 services:
   db:

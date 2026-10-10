@@ -2,7 +2,7 @@
 
 Sin secretos: las keys y los tokens de URL firmada NO se reproducen aquí.
 
-## Supabase Storage (decisión CONTEXT.md §11.2)
+## Supabase Storage (decisión de arquitectura sobre storage)
 
 Proveedor real verificado con `scripts/smoke_storage_supabase.py` contra
 uvicorn + PostgreSQL + Resend reales (salida: **11/11 verificaciones ok**):

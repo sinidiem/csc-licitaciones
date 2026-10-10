@@ -1,6 +1,6 @@
 """Entidad tender_items: partidas producto/cantidad/precio de cada licitación.
 
-Reglas (CONTEXT.md §3): cantidad > 0, unit_price >= 0, único por
+Reglas ( §3): cantidad > 0, unit_price >= 0, único por
 licitación/producto, y SUBTOTAL = cantidad × precio.
 El total de partidas no debe superar budget_max (se valida en servicios
 dentro de una transacción, no en el modelo).

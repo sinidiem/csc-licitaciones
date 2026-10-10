@@ -1,4 +1,4 @@
-"""Servicio de pagos contra licitaciones en `por_cobrar` (CONTEXT.md §4.6).
+"""Servicio de pagos contra licitaciones en `por_cobrar` ( §4.6).
 
 Reglas:
 - Pagos SOLO en `to_collect` (409 INVALID_STATUS_TRANSITION en otro estado).
@@ -112,7 +112,7 @@ def register_payment(
     new_saldo = saldo - amount
     if new_saldo == 0:
         # Saldo saldado: transición automática en la MISMA transacción del
-        # último pago (CONTEXT.md §4.6, matriz to_collect -> collected).
+ # último pago (, matriz to_collect -> collected).
         locked.status = TenderStatus.COLLECTED.value
         session.add(
             TenderStatusHistory(

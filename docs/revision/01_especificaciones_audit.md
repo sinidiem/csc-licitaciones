@@ -1,7 +1,7 @@
 # Auditoría de cumplimiento de especificaciones — CSC
 
 Fecha: 2026-10-08. Fuente de requisitos (autoridad máxima):
-`CONTEXT.md` y `AGENTS.md`.
+la documentación del proyecto.
 
 Método y evidencias: lectura sistemática del código (`backend/app`,
 `frontend/src`), suite pytest (**62/62 en verde** contra
@@ -71,7 +71,7 @@ formalizaciones (⚠) documentadas al final, todas resueltas el mismo día (2026
 | Storage privado + URL firmada corta con autorización | ✅ | `services/storage.py` (bucket privado, URL firmada 15 min en descarga); smoke 11/11 con Supabase real |
 | Validar extensión, tamaño y MIME; nombres de objeto aleatorios | ✅ | `validate_upload`, `random_object_key`, `read_uploaded` (límite de memoria); `safe_original_name` saneado; tests nuevos `test_storage_adapters.py` |
 | Cron interno con secreto rotable y comparación segura | ✅ | `endpoints/internal.py` (`hmac.compare_digest`, 401 sin/incorrecto; no se loguea) |
-| Defensa CSRF evaluada y documentada | ⚠ | `SameSite=lax` activo y documentado en README; falta la formalización en CONTEXT.md (pendiente identificado) |
+| Defensa CSRF evaluada y documentada | ⚠ | `SameSite=lax` activo y documentado en README; falta la formalización (pendiente identificado) |
 
 ## 6. Automatización / jobs (AGENTS §7)
 
@@ -106,7 +106,7 @@ formalizaciones (⚠) documentadas al final, todas resueltas el mismo día (2026
    requerido por la guía es el correo del cliente). Comportamiento por
    diseño, documentado; repetir nombres es válido.
 3. **Decisión CSRF** — **RESUELTA (2026-10-08):** formalizada en
-   CONTEXT.md §11.9 (`SameSite=lax` + mismo-origen + JSON; sin token
+   documentación de seguridad (`SameSite=lax` + mismo-origen + JSON; sin token
    adicional) y complementada con rate limit por IP en `/auth/login`.
 4. **Detalle de validación 422 en la UI** — **RESUELTO (2026-10-08):**
    `api.ts` formatea los `detail` tipo array de pydantic (B1 de la

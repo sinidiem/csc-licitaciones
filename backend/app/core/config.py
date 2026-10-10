@@ -1,6 +1,6 @@
 """Configuración de la aplicación vía variables de entorno (.env).
 
-Regla CONTEXT.md: los secretos (DB, correo, storage, cron) viven en el
+Regla : los secretos (DB, correo, storage, cron) viven en el
 ambiente/despliegue, nunca en el repositorio. Aquí solo se definen defaults
 de desarrollo y los nombres de variables.
 """
@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     environment: str = "development"  # development | production
     api_v1_prefix: str = "/api/v1"
 
-    # --- Base de datos (PostgreSQL, stack definido en CONTEXT.md) -------
+ # --- Base de datos (PostgreSQL, stack definido en ) -------
     database_url: str = "postgresql://postgres:password@localhost:5432/licitaciones_db"
 
     # --- Seguridad / sesión (JWT en cookie HttpOnly) --------------------
@@ -56,7 +56,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_service_key: str = ""
 
-    # --- Storage de propuestas (decisión CONTEXT.md §11.2) --------------
+ # --- Storage de propuestas (decisión ) --------------
     # Dev: adaptador "local" (disco, gitignored, misma interfaz). Cuando
     # existan SUPABASE_URL+SERVICE_KEY se usa el adaptador supabase
     # (bucket privado + URL firmada de corta duración).
@@ -65,7 +65,7 @@ class Settings(BaseSettings):
     max_proposal_size_mb: int = 10
     # Duración de la URL firmada para descarga de propuestas (segundos).
     signed_url_expires_seconds: int = 900
-    # Extensiones admitidas (validación CONTEXT.md §7: tipo/tamaño).
+ # Extensiones admitidas (validación : tipo/tamaño).
     allowed_extensions: str = "pdf,doc,docx,xls,xlsx,odt,txt"
 
 

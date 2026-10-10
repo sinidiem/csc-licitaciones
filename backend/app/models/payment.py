@@ -1,6 +1,6 @@
 """Entidad payments: pagos registrados contra una licitación en por_cobrar.
 
-Regla (CONTEXT.md §3.6): importe > 0 y menor/igual al saldo pendiente
+Regla ( §3.6): importe > 0 y menor/igual al saldo pendiente
 (saldo = invoiced_total - SUM(payments.amount)); no se permite sobrepago.
 """
 

@@ -57,7 +57,7 @@ FastAPI (:8000, /api/v1) ── alembic ──► PostgreSQL (Docker)
 5. **Seguridad por capas, sin secretos en el repo:**
    Argon2id para contraseñas; JWT HS256 en cookie `HttpOnly` + `SameSite=lax`
    (mismo-origen, sin CORS abierto — decisión CSRF formalizada en
-   CONTEXT.md §11.9); `GET /users` y alta de usuarios solo admin; endpoint
+   documentación de seguridad); `GET /users` y alta de usuarios solo admin; endpoint
    interno `/internal/jobs/tenders` con `X-Cron-Secret` comparado con
    `hmac.compare_digest`; limitador por IP en `/auth/login` (429).
 
@@ -79,7 +79,7 @@ FastAPI (:8000, /api/v1) ── alembic ──► PostgreSQL (Docker)
 
 ## Despliegue (estado y opciones)
 
-DECIDIDO (2026-10-08, CONTEXT §11.10): **Render (plan free), un solo
+DECIDIDO (2026-10-08): **Render (plan free), un solo
 origen**. API + frontend viven en UN web service a partir del `Dockerfile`
 de la raíz (uvicorn :8000 + Next standalone :3000 detrás del mismo dominio
 `*.onrender.com`): la cookie JWT `SameSite=lax` se mantiene misma-origen y

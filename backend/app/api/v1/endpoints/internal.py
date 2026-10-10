@@ -1,6 +1,6 @@
 """Endpoints internos de jobs (cron del VPS), protegidos por secreto.
 
-CONTEXT.md §6-7: el cron invoca `POST /internal/jobs/tenders` con el header
+§6-7: el cron invoca `POST /internal/jobs/tenders` con el header
 `X-Cron-Secret`; la comparación es segura (`hmac.compare_digest`) y el
 secreto jamás se loguea. El router se monta en `app.main` SIN el prefijo
 /api/v1 (ruta plana, fuera del alcance del evaluador).

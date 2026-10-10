@@ -1,4 +1,4 @@
-"""Servicio de envío de email con patrón Outbox (CONTEXT.md §4).
+"""Servicio de envío de email con patrón Outbox (reglas de negocio §4).
 
 Diseño: el envío real a Resend se hace FUERA de la transacción SQL.
 1) Se persiste la intención (outbox pending) y se hace COMMIT.
@@ -37,7 +37,7 @@ def _deliver(outbox: EmailOutbox, params: Any) -> EmailOutbox:
     """Llama al proveedor con `params` y confirma sent/failed en la fila.
 
     Sin transacción abierta (el INSERT/COMMIT previo ya cerró la suya): el
-    proveedor se llama FUERA de cualquier transacción SQL (CONTEXT.md §4).
+    proveedor se llama FUERA de cualquier transacción SQL (reglas de negocio §4).
     """
     try:
         response = resend.Emails.send(params)

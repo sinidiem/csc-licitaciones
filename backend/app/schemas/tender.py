@@ -68,7 +68,7 @@ class TransitionRequest(BaseModel):
 
 
 class TenderInvoiceRequest(BaseModel):
-    """Registro de factura (decisión CONTEXT.md §11.3, día 7).
+    """Registro de factura (decisión , día 7).
 
     Importe estrictamente positivo; puede diferir del total de partidas
     (negociación/descuentos). El servicio valida que no sea inferior a los

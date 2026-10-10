@@ -1,4 +1,4 @@
-"""Adaptador de storage para documentos de propuesta (CONTEXT.md §11.2).
+"""Adaptador de storage para documentos de propuesta ( §11.2).
 
 Interfaz única para la lógica de negocio: upload/get_bytes (+ URL firmada
 para descarga autorizada). En desarrollo sin credenciales es el adaptador
@@ -14,7 +14,7 @@ el gateway si solo se envía `Authorization`; con los headers `apikey` +
 /storage/v1/bucket (list/create), /storage/v1/object (upload/download/delete)
 y /storage/v1/object/sign (URL firmada).
 
-Seguridad (CONTEXT.md §7):
+Seguridad ( §7):
 - Validación de extensión y tamaño ANTES de persistir (aquí solo se guarda;
   la validación de MIME la hace el llamador con el contenido real).
 - Nombres de objeto aleatorios (uuid hex + extensión saneada).
@@ -138,7 +138,7 @@ class SupabaseStorageAdapter:
         return r.content
 
     def create_signed_url(self, *, bucket: str, object_key: str, expires_in: int = 900) -> str:
-        """URL firmada de corta duración para descarga autorizada (CONTEXT.md §7)."""
+        """URL firmada de corta duración para descarga autorizada ( §7)."""
         r = self._http.post(
             f"/storage/v1/object/sign/{bucket}/{object_key}", json={"expiresIn": expires_in}
         )

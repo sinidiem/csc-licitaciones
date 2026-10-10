@@ -1,6 +1,6 @@
 # Backend — Sistema de Gestión de Licitaciones (CSC)
 
-FastAPI + SQLModel + Alembic + PostgreSQL (stack definido en `CONTEXT.md`,
+FastAPI + SQLModel + Alembic + PostgreSQL (stack definido en los requisitos del proyecto,
 sección "Decisiones Tecnológicas").
 
 ## Estructura
@@ -23,7 +23,7 @@ backend/
 │   ├── schemas/           # Pydantic request/response
 │   ├── services/          # Reglas de negocio (transiciones, pagos, outbox)
 │   └── jobs/              # Vencimiento y recordatorios (cron)
-└── tests/                 # Pytest (CONTEXT.md §5)
+└── tests/                 # Pytest (suite de pruebas automáticas)
 ```
 
 ## Arranque
@@ -66,7 +66,7 @@ docker compose up -d db     # PostgreSQL (repositorio raíz)
 | `POST /tenders/{id}/payments` | Abono en `por_cobrar`; saldo = 0 → `collected` automático en la misma transacción |
 | `POST /internal/jobs/tenders` | Cron (fuera de `/api/v1`, oculto del OpenAPI): vencimientos → `lost` y recordatorio 48h. Header `X-Cron-Secret` obligatorio (401 si falta/falla) |
 
-Reglas de partidas (CONTEXT.md §4 y decisión §11.1): el total
+Reglas de negocio de partidas: el total
 `SUM(quantity × unit_price)` no puede superar `budget_max` (422
 `BUDGET_EXCEEDED`, validado con `FOR UPDATE` contra carreras); partidas solo
 editables en `draft` (409 `INVALID_STATUS_TRANSITION` en `active` y estados
@@ -79,7 +79,7 @@ correo de empresa en el cliente → 409 `CLIENT_EMAIL_REQUIRED`; el correo real
 se envía con patrón outbox (Resend) FUERA de la transacción y la licitación
 pasa a `active` solo cuando el proveedor acepta (502 `EMAIL_PROVIDER_FAILED`
 si no); reenvío → 409. La propuesta se guarda en **Supabase Storage**
-(bucket privado `proposals`; decisión CONTEXT.md §11.2) cuando hay
+(bucket privado `proposals`, storage en Supabase) cuando hay
 `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` en el entorno; sin ellas, el
 adaptador local `.storage/` (gitignored) hace de placeholder de desarrollo.
 `GET /tenders/{id}/proposal/download` devuelve un `307` a la **URL firmada**
@@ -89,7 +89,7 @@ Supabase (`sb_secret_…`) se envían como `apikey` + `Authorization: Bearer`
 (se verifica el bucket privado al arrancar el adaptador).
 
 Toda creación registra auditoría (`created_by` / `created_at`); los importes
-viajan como string decimal (`"22.50"`), nunca como `float` — regla CONTEXT.md.
+viajan como string decimal (`"22.50"`), nunca como `float` (regla del modelo de datos).
 
 Autenticación: JWT (HS256, Argon2id para contraseñas) en cookie HttpOnly,
 `Secure` en producción y `SameSite=lax`. Los endpoints protegidos devuelven
@@ -118,7 +118,7 @@ del despliegue):
 ```
 
 El endpoint está diseñado para que el cron pueda vivir FUERA del servidor de
-la app (CONTEXT.md §11.10): alternativas igualmente válidas — **GitHub
+la app: alternativas igualmente válidas — **GitHub
 Actions** `schedule:` (ejemplo en `docs/REGISTRO_DESARROLLO.md`) o **cron-job.org**
 (job HTTP con cabecera `X-Cron-Secret` personalizada), cada 30-60 minutos.
 
@@ -172,14 +172,14 @@ end-to-end con email real está en `scripts/smoke_dia7.py` y
 verificación en vivo del job con contadores `reminders_sent/duplicated`
 (2026-10-08).
 
-Pendiente: DESPLIEGUE (decisión RESUELTA en CONTEXT §11.10: Render, un
+Pendiente: DESPLIEGUE (decisión RESUELTA: Render, un
 solo origen, + Supabase + cron externo; runbook en `../docs/DEPLOY.md`),
 cron real desplegado, recorrido integral en el entorno desplegado y
 evidencias finales (día 10). El frontend (Next.js) está en `../frontend` y
 se conecta a esta API vía rewrite de `/api/*` (ver `../frontend/README.md`).
-Detalle, reglas y roadmap en `../CONTEXT.md` y `../README.md` (raíz).
+Detalle, reglas y roadmap en `../README.md` (raíz).
 
-## Convenciones de modelo (CONTEXT.md §3)
+## Convenciones de modelo de datos
 
 - PK: `uuid.UUID` (`UuidPkMixin`) → `UUID` en PostgreSQL.
 - Fechas: `AwareDatetime` → `UTCDateTime` (`TIMESTAMP WITH TIME ZONE`).

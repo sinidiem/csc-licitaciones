@@ -1,4 +1,4 @@
-"""Servicio de transiciones de estado de licitaciones (CONTEXT.md §4-5).
+"""Servicio de transiciones de estado de licitaciones (reglas de negocio).
 
 Cada comando valida el estado actual, aplica restricciones y registra
 `tender_status_history` en la MISMA transacción. Transiciones inválidas →
@@ -38,7 +38,7 @@ EMAIL_TYPE_SUBMIT = "tender_submitted"
 
 
 def _lock_tender(session: Session, tender: Tender) -> Tender:
-    """Recarga la licitación con SELECT ... FOR UPDATE (CONTEXT.md plan §6).
+    """Recarga la licitación con SELECT ... FOR UPDATE ( plan §6).
 
     Serializa transiciones/pagos concurrentes sobre la misma licitación: la
     segunda transacción espera a que la primera COMMIT/ROLLBACK y revalida
@@ -189,7 +189,7 @@ def _require_transition(tender: Tender, target: TenderStatus) -> None:
 
 
 def _require_draft_items_editable(tender: Tender) -> None:
-    """Guardas para comandos que mutan partidas (decisión CONTEXT.md §11.1)."""
+    """Guardas para comandos que mutan partidas (decisión )."""
     if tender.status != TenderStatus.DRAFT.value:
         raise business_error(
             409,
