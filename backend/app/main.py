@@ -16,6 +16,7 @@ app = FastAPI(
     description="Sistema de Gestión de Licitaciones (CSC). API REST /api/v1.",
     docs_url="/docs" if settings.environment != "production" else None,
     redoc_url=None,
+    openapi_url="/openapi.json" if settings.environment != "production" else None,
 )
 
 app.include_router(api_router, prefix=settings.api_v1_prefix)
