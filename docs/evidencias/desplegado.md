@@ -1,4 +1,4 @@
-# Evidencia del desplegado - Render + Supabase (2026-10-08)
+# Evidencia del desplegado - Render + Supabase
 
 Entorno real de producción, separado de las evidencias locales
 (`docs/evidencias/dia10_ui/`, `dia9_supabase_ui.md`).
@@ -10,7 +10,7 @@ Entorno real de producción, separado de las evidencias locales
 | Proveedores | Render (free, un solo origen) + Supabase (Postgres y Storage) + Resend |
 | BD | Postgres gestionado de Supabase vía pooler (IPv4) |
 
-## Comprobaciones en vivo (2026-10-08, contra la URL pública)
+## Comprobaciones en vivo
 
 | Comprobación | Resultado |
 |---|---|
