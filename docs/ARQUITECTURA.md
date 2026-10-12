@@ -23,13 +23,11 @@ FastAPI (:8000, /api/v1) ── alembic ──► PostgreSQL (Docker)
 - Backend: FastAPI + SQLModel + Alembic. Los routers (`api/v1/endpoints`)
   son delgados; la lógica de negocio vive en `services/` (transiciones,
   pagos, jobs, email, storage) para poder probarla y reutilizarla.
-- Frontend: Next.js App Router, `src/lib/api.ts` como único cliente HTTP
-  (rutas sin barra final; ver LOG del desarrollo en
-  `docs/REGISTRO_DESARROLLO.md`), UI en español.
+- Frontend: Next.js App Router, `src/lib/api.ts` como único cliente HTTP, UI en español.
 - BD: PostgreSQL en Docker para dev; migraciones Alembic (nunca
   `create_all`); testeado con una BD aislada `licitaciones_test`.
 
-## Decisiones que conviene poder defender
+## Decisiones
 
 1. Matriz de estados con historial en la misma transacción.
   `draft -> active -> finished -> to_collect -> collected` (+ `lost`). Cualquier
@@ -64,7 +62,7 @@ FastAPI (:8000, /api/v1) ── alembic ──► PostgreSQL (Docker)
 6. Soft delete de clientes. `clients.deleted_at`: fuera de listas y web,
   fila, licitaciones e historial intactos; sin nuevas licitaciones para él.
 
-## Cómo está verificado (evidencia, no "compila = listo")
+## Cómo está verificado
 
 - Backend: pytest contra PostgreSQL real aislado (77 casos: matriz 20
   transiciones inválidas, presupuesto, pagos/sobrepago, jobs/cron, storage
@@ -85,10 +83,10 @@ de la raíz (uvicorn :8000 + Next standalone :3000 detrás del mismo dominio
 `*.onrender.com`): la cookie JWT `SameSite=lax` se mantiene misma-origen y
 el cron entra por el rewrite de `POST /internal/jobs/tenders`.
 
-- Postgres y Storage: Supabase (proyecto ya contratado); Alembic corre
+- Postgres y Storage: Supabase; Alembic corre
   al primer arranque (entrypoint idempotente). (El Postgres free de Render
   se borra a los 30 días; por eso no se usa.)
-- Cron: externo - cron-job.org (o GitHub Actions al subir el repo) con
+- Cron: externo - cron-job.org con
   `X-Cron-Secret`; Healthchecks.io opcional.
 - Free tier: el servicio duerme tras ~15 min sin tráfico (cold start
   30-60 s; el ping del cron lo despierta).
@@ -97,15 +95,4 @@ el cron entra por el rewrite de `POST /internal/jobs/tenders`.
 
 Secretos del despliegue: `SECRET_KEY`, `ADMIN_PASSWORD`, `RESEND_API_KEY`,
 `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `CRON_SECRET` (`backend/.env.example`).
-
-## Límites conscientes (fuera de alcance de la prueba técnica)
-
-- Multiusuario sin multi-tenant ni ownership por comercial (roles
-  admin/user + permisos puntuales).
-- Sin paginación en la UI del listado (la API ya tiene `limit/offset`).
-- Rate limiting por IP en memoria (mono-worker): para producción
-  multi-worker se movería a Redis. El cron ya es externo por diseño
   (endpoint + secreto): puede vivir en otro servicio aunque la app caiga.
-- Sin CI ni remoto git aún: el usuario quiere GitHub "casi al final"; el
-  repo ya está listo (tag v1.0.0, docs completas) para empujar y colgar CI.
-  Despliegue decidido: Render (sección anterior); ejecución pendiente.
