@@ -1,4 +1,4 @@
-# Manual del usuario - CSC (Sistema de Gestión de Licitaciones)
+# Manual del usuario - Sistema de Gestión de Licitaciones
 
 Versión para usuarios finales. Si es tu primera vez entrando a la
 plataforma, este documento te explica qué es, qué puedes hacer y cómo
@@ -6,9 +6,9 @@ funciona todo el ciclo, en lenguaje sencillo.
 
 ---
 
-## 1. ¿Qué es CSC?
+## 1. ¿Qué es este sistema?
 
-CSC es la plataforma web de tu equipo comercial para llevar el control
+Es la plataforma web de tu equipo comercial para llevar el control
 completo del ciclo de vida de una licitación: desde que surge la
 oportunidad, se prepara la oferta, se envía al cliente de forma oficial,
 se da seguimiento (¿ganamos o perdimos?), hasta que se factura y se cobra.
