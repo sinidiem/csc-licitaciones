@@ -1,4 +1,4 @@
-# CSC - Sistema de Gestión de Licitaciones
+# Sistema de Gestión de Licitaciones
 
 Gestión de licitaciones de principio a fin: armar la oferta, enviarla
 oficialmente por correo, dar seguimiento (ganada/perdida), facturar y
@@ -10,7 +10,7 @@ Storage (bucket privado + URL firmada).
 
 ![Listado final del E2E](docs/evidencias/dia10_ui/07_lista_final.png)
 
-## Qué hace (en 30 segundos)
+## Qué hace
 
 - Arma la oferta como borrador con partidas (productos, cantidades,
   precios) y valida que el total nunca supere el presupuesto (con locks:
@@ -26,7 +26,7 @@ Storage (bucket privado + URL firmada).
 - Clientes, productos y usuarios gestionables desde la UI; borrado lógico
   de clientes (sus licitaciones se conservan).
 
-## Arranque en 5 minutos
+## Arranque
 
 ```bash
 ./scripts/bootstrap.sh --run  # BD + migraciones + seed + backend :8000 + frontend :3000
@@ -54,7 +54,7 @@ El frontend llama al backend por el mismo origen (rewrite de Next), así que
 la cookie JWT funciona igual que en local. El Swagger/OpenAPI queda oculto
 en producción (regla de seguridad) y visible en dev (`/docs` en local).
 
-## Verificación (evidencia, no "compila = listo")
+## Verificación
 
 | Capa | Resultado |
 |---|---|
@@ -95,16 +95,6 @@ soft delete).
 - `docs/MANUAL_USUARIO.md` - manual para usuarios finales.
 - `docs/revision/` - informes de la revisión de calidad (especificaciones,
   código, QA exploratorio).
-
-## Fuera de alcance (decisiones conscientes)
-
-La prueba técnica prioriza un vertical completo y sólido; lo siguiente es
-fase expresamente posterior y está razonado en `docs/ARQUITECTURA.md`:
-multi-tenant/ownership por comercial, paginación visual del listado,
-rate limiting/cron para multi-worker (Redis), CI y remoto git (casi al
-final, decisión del usuario). El despliegue -VPS propio o gestionado- está
-pendiente de elegir: ver `docs/ARQUITECTURA.md` (Despliegue) y
-`docs/DEPLOY.md`.
 
 ## Estructura
 
