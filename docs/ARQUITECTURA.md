@@ -79,7 +79,7 @@ FastAPI (:8000, /api/v1) ── alembic ──► PostgreSQL (Docker)
 
 ## Despliegue (estado y opciones)
 
-DECIDIDO (2026-10-08): Render (plan free), un solo
+Render (plan free), un solo
 origen. API + frontend viven en UN web service a partir del `Dockerfile`
 de la raíz (uvicorn :8000 + Next standalone :3000 detrás del mismo dominio
 `*.onrender.com`): la cookie JWT `SameSite=lax` se mantiene misma-origen y
