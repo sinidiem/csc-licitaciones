@@ -1,8 +1,6 @@
-# Evidencia - Supabase Storage real y frontend (2026-10-07)
+# Evidencia - Supabase Storage real y frontend
 
-Sin secretos: las keys y los tokens de URL firmada NO se reproducen aquí.
-
-## Supabase Storage (decisión de arquitectura sobre storage)
+## Supabase Storage
 
 Proveedor real verificado con `scripts/smoke_storage_supabase.py` contra
 uvicorn + PostgreSQL + Resend reales (salida: 11/11 verificaciones ok):
