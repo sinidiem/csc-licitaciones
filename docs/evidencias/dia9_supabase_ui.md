@@ -1,11 +1,11 @@
-# Evidencia — Supabase Storage real y frontend (2026-10-07)
+# Evidencia - Supabase Storage real y frontend (2026-10-07)
 
 Sin secretos: las keys y los tokens de URL firmada NO se reproducen aquí.
 
 ## Supabase Storage (decisión de arquitectura sobre storage)
 
 Proveedor real verificado con `scripts/smoke_storage_supabase.py` contra
-uvicorn + PostgreSQL + Resend reales (salida: **11/11 verificaciones ok**):
+uvicorn + PostgreSQL + Resend reales (salida: 11/11 verificaciones ok):
 
 ```
 [ok  ] login admin (200)
@@ -22,7 +22,7 @@ uvicorn + PostgreSQL + Resend reales (salida: **11/11 verificaciones ok**):
 ```
 
 - Bucket privado `proposals` (no público), creado por el adaptador.
-- `GET /tenders/{id}/proposal/download` → `307` con `Location` a la URL
+- `GET /tenders/{id}/proposal/download` -> `307` con `Location` a la URL
   firmada (`/storage/v1/object/sign/...?token=…`); el token se omite aquí.
 - El adjunto del email oficial se descarga de Supabase vía `get_bytes`
   (misma lógica de envío con Resend verificada en los smokes).
@@ -38,7 +38,7 @@ backend :8000, `next build` sin errores de tipos, 9 rutas):
 | Comprobación | Resultado |
 |---|---|
 | `GET /login` (UI renderizada) | 200 |
-| `GET /licitaciones` sin sesión | 307 → `/login` (guard server-side) |
+| `GET /licitaciones` sin sesión | 307 -> `/login` (guard server-side) |
 | `POST /api/auth/login` vía el proxy de Next (usuario ficticio `ui.demo@csc.dev` creado por el admin) | 200, cookie `access_token` |
 | `GET /licitaciones` con sesión | 200 |
 | `GET /api/auth/me` y listados vía el proxy | 200 |

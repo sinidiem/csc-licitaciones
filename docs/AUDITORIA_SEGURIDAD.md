@@ -1,4 +1,4 @@
-# Auditoría de seguridad — Sistema de Gestión de Licitaciones (CSC)
+# Auditoría de seguridad - Sistema de Gestión de Licitaciones (CSC)
 
 Revisión de las capas de seguridad del proyecto, desde la autenticación
 hasta el despliegue. Cada sección describe lo implementado, lo que falta y
@@ -19,8 +19,8 @@ el riesgo residual.
 | Aspecto | Estado | Detalle |
 |---|---|---|
 | Roles | `admin` y `user` | `require_admin` eleva 403 si `user.role != "admin"`. Aplicado en `GET /users` (listado) y `POST /users` (creación). |
-| Endpoints protegidos | `CurrentUser` dependency | Todos los endpoints de negocio requieren sesión válida (`get_current_user` → cookie → JWT → BD). |
-| Endpoint interno | `X-Cron-Secret` + `hmac.compare_digest` | `POST /internal/jobs/tenders` usa comparación en tiempo constante. Sin secreto → 401; el secreto nunca se loguea. `include_in_schema=False` lo oculta del OpenAPI incluso en dev. |
+| Endpoints protegidos | `CurrentUser` dependency | Todos los endpoints de negocio requieren sesión válida (`get_current_user` -> cookie -> JWT -> BD). |
+| Endpoint interno | `X-Cron-Secret` + `hmac.compare_digest` | `POST /internal/jobs/tenders` usa comparación en tiempo constante. Sin secreto -> 401; el secreto nunca se loguea. `include_in_schema=False` lo oculta del OpenAPI incluso en dev. |
 | Soft delete de clientes | `deleted_at` + filtro en queries | Las licitaciones existentes se conservan; el cliente borrado no acepta nuevas ni aparece en listas. La unicidad de correo se mantiene en TODAS las filas (incluidas las borradas). |
 | UI oculta menú admin | `Nav.tsx` + verificación backend | El menú solo muestra "Usuarios" si `/api/users` (admin requerido) responde 200; si no, se oculta. El backend pone el 403. |
 
@@ -28,7 +28,7 @@ el riesgo residual.
 
 | Aspecto | Estado | Detalle |
 |---|---|---|
-| ORM parametrizado | SQLModel (SQLAlchemy) | Todas las consultas usan el ORM o `select()` con parámetros; no hay SQL crudo interpolado. |
+| ORM parametrizado | SQLModel (SQLAlchemy) | Todas las consultas usan el ORM o `select` con parámetros; no hay SQL crudo interpolado. |
 | Validación de esquemas | Pydantic v2 | `BaseModel` con tipos estrictos en todos los endpoints de entrada (LoginRequest, UserCreate, TenderCreate, PaymentCreate...). |
 | Importes | `Decimal` con `Numeric(14,2)` | Nunca `float` para dinero; evita errores de redondeo y desbordamiento. |
 | IDs | `uuid.UUID` | Validación automática por Pydantic en parámetros de ruta. |
@@ -60,10 +60,10 @@ el riesgo residual.
 | Aspecto | Estado | Detalle |
 |---|---|---|
 | Bucket | Privado (`proposals`) | No es público; solo accesible con la `service_key` desde el backend. |
-| URL de descarga | Firmada, 15 min | `GET /tenders/{id}/proposal/download/signed` → 307 al objeto con token efímero. Sin la URL firmada, el objeto es inaccesible. |
-| Nombres de objeto | Aleatorios | `random_object_key` genera `uuid4().hex + ext`; no revelan el nombre original del archivo. |
-| Adaptador local | Solo desarrollo | En producción, el backend exige credenciales de Supabase (`storage.provider != "supabase"` → 409 en descarga firmada). |
-| RLS de Supabase | **DESACTIVADO** | Las políticas de Row Level Security en el proyecto de Supabase no están habilitadas. El backend usa la `service_key` (rol `service_role`, bypass de RLS) para todas las operaciones, así que el acceso está mediado exclusivamente por la lógica de la aplicación, no por la base de datos. **Riesgo**: si la `service_key` se filtrara, un atacante tendría acceso completo a los buckets y a las filas de Postgres sin restricción adicional. **Recomendación**: activar RLS con políticas que restrinjan el acceso incluso al rol `service_role` (o usar una key con menos privilegios para el backend). |
+| URL de descarga | Firmada, 15 min | `GET /tenders/{id}/proposal/download/signed` -> 307 al objeto con token efímero. Sin la URL firmada, el objeto es inaccesible. |
+| Nombres de objeto | Aleatorios | `random_object_key` genera `uuid4.hex + ext`; no revelan el nombre original del archivo. |
+| Adaptador local | Solo desarrollo | En producción, el backend exige credenciales de Supabase (`storage.provider != "supabase"` -> 409 en descarga firmada). |
+| RLS de Supabase | DESACTIVADO | Las políticas de Row Level Security en el proyecto de Supabase no están habilitadas. El backend usa la `service_key` (rol `service_role`, bypass de RLS) para todas las operaciones, así que el acceso está mediado exclusivamente por la lógica de la aplicación, no por la base de datos. Riesgo: si la `service_key` se filtrara, un atacante tendría acceso completo a los buckets y a las filas de Postgres sin restricción adicional. Recomendación: activar RLS con políticas que restrinjan el acceso incluso al rol `service_role` (o usar una key con menos privilegios para el backend). |
 
 ## 7. Correo electrónico (Resend)
 
@@ -78,35 +78,35 @@ el riesgo residual.
 
 | Aspecto | Estado | Detalle |
 |---|---|---|
-| Login | Ventana deslizante por IP, 20 intentos/min | `login_rate_limit` en `app/core/ratelimit.py`; implementación en memoria con `deque` por IP. Tras superar el límite → 429. |
-| Limpieza entre tests | `clear_login_attempts()` | `conftest.py` resetea el estado al inicio de la sesión. |
-| Límite del enfoque | Mono-worker | En un despliegue multi-worker (varios procesos uvicorn), cada worker tiene su propio diccionario en memoria → un atacante podría distribuir intentos entre workers. Documentado como límite consciente; a producción se movería a Redis. |
+| Login | Ventana deslizante por IP, 20 intentos/min | `login_rate_limit` en `app/core/ratelimit.py`; implementación en memoria con `deque` por IP. Tras superar el límite -> 429. |
+| Limpieza entre tests | `clear_login_attempts` | `conftest.py` resetea el estado al inicio de la sesión. |
+| Límite del enfoque | Mono-worker | En un despliegue multi-worker (varios procesos uvicorn), cada worker tiene su propio diccionario en memoria -> un atacante podría distribuir intentos entre workers. Documentado como límite consciente; a producción se movería a Redis. |
 | Sin rate limit en otros endpoints | Solo login | `POST /users` (creación), `POST /tenders/{id}/payments` y otros endpoints de escritura no tienen rate limit. Riesgo bajo en una prueba técnica con pocos usuarios. |
 
 ## 9. Modelo de datos y consistencia
 
 | Aspecto | Estado | Detalle |
 |---|---|---|
-| Bloqueo contra carreras | `SELECT ... FOR UPDATE` | Aplicado en presupuesto (partidas), pagos (último pago → `collected`), vencimiento automático (job del cron). |
+| Bloqueo contra carreras | `SELECT ... FOR UPDATE` | Aplicado en presupuesto (partidas), pagos (último pago -> `collected`), vencimiento automático (job del cron). |
 | Transiciones atómicas | `tender_status_history` en la misma transacción | Cada cambio de estado registra actor, razón y fuente (`user` o `system`) sin posibilidad de estados huérfanos. |
 | Soft delete | `deleted_at` con índice | Las filas no se eliminan físicamente; los listados y la lógica de negocio las excluyen. Restricción `UNIQUE` en `company_email` aplica a TODAS las filas. |
 
 ## 10. Hallazgos y recomendaciones
 
-### H1 — Healthcheck del backend siempre falla (Bajo)
+### H1 - Healthcheck del backend siempre falla (Bajo)
 
 El `HEALTHCHECK` del Dockerfile verifica el puerto 8000 con una petición a
-`/api/v1/auth/me`, que requiere cookie de sesión. Sin cookie → 401 →
-`HTTPError` → `exit 1`. Como resultado, el healthcheck del backend nunca
+`/api/v1/auth/me`, que requiere cookie de sesión. Sin cookie -> 401 ->
+`HTTPError` -> `exit 1`. Como resultado, el healthcheck del backend nunca
 reporta `healthy`. El chequeo del frontend (`/login` en :3000) sí funciona.
 
-**Recomendación**: añadir un endpoint público de salud (ej. `GET /health`
+Recomendación: añadir un endpoint público de salud (ej. `GET /health`
 que responda `{"status":"ok"}` sin autenticación) o cambiar la verificación
 del backend por una ruta que no exija sesión (ej. `POST /api/auth/login`
 con credenciales inválidas esperando un 401, o simplemente verificar que el
 puerto acepte conexiones).
 
-### H2 — RLS de Supabase desactivado (Medio)
+### H2 - RLS de Supabase desactivado (Medio)
 
 El Row Level Security del proyecto de Supabase está desactivado. El backend
 usa la `service_key` (`service_role`) que omite cualquier política RLS. Si
@@ -114,54 +114,54 @@ esta key se filtrara (ej. por un error de configuración, un log accidental,
 o una vulnerabilidad en el backend), un atacante tendría acceso completo a
 todas las tablas y buckets.
 
-**Recomendación**: habilitar RLS en las tablas de Postgres y en el bucket de
+Recomendación: habilitar RLS en las tablas de Postgres y en el bucket de
 Storage, y crear políticas que restrinjan las operaciones incluso al rol
 autenticado. Si se necesita el bypass para el backend, usar una key con rol
 `authenticated` y políticas que permitan las operaciones necesarias, en vez
 de `service_role`.
 
-### H3 — Sin verificación de que los defaults de desarrollo se hayan cambiado en producción (Medio)
+### H3 - Sin verificación de que los defaults de desarrollo se hayan cambiado en producción (Medio)
 
 `SECRET_KEY`, `ADMIN_PASSWORD` y `CRON_SECRET` tienen valores débiles
 (`dev-only-*`) en `config.py`. Si se despliega sin sobrescribir las
 variables de entorno, la aplicación arranca con secretos conocidos
 públicamente.
 
-**Recomendación**: en el entrypoint de despliegue (`deploy/entrypoint.sh`),
+Recomendación: en el entrypoint de despliegue (`deploy/entrypoint.sh`),
 verificar que `SECRET_KEY` no coincida con el default de desarrollo y
 abortar el arranque si es el caso. Ídem para `CRON_SECRET` y
 `ADMIN_PASSWORD`.
 
-### H4 — Sin invalidación de tokens al cerrar sesión (Bajo)
+### H4 - Sin invalidación de tokens al cerrar sesión (Bajo)
 
 `POST /auth/logout` solo borra la cookie del navegador; el token JWT sigue
 siendo válido hasta que expire (7 días en dev). Si un atacante captura el
 token antes del logout, puede usarlo hasta su expiración natural.
 
-**Recomendación**: para producción, mantener una lista negra de tokens
+Recomendación: para producción, mantener una lista negra de tokens
 revocados (en Redis o BD) con TTL igual al `exp` restante, o reducir la
 vida del token y usar refresh tokens.
 
-### H5 — Rate limit no distribuido (Bajo)
+### H5 - Rate limit no distribuido (Bajo)
 
 El limitador de login es un diccionario en memoria del proceso Python. En
 un despliegue con múltiples workers, cada uno tiene su propia ventana.
 
-**Recomendación**: documentado como límite consciente. A producción
+Recomendación: documentado como límite consciente. A producción
 multi-worker, mover a Redis (`INCR` + `EXPIRE`).
 
-### H6 — Sin registro de auditoría de accesos (Bajo)
+### H6 - Sin registro de auditoría de accesos (Bajo)
 
 No hay log de inicios de sesión (exitosos o fallidos) más allá del rate
 limit en memoria.
 
-**Recomendación**: para un sistema en producción, registrar intentos de
+Recomendación: para un sistema en producción, registrar intentos de
 login en una tabla `login_audit` (éxito, fallo, IP, timestamp) para
 detección de anomalías.
 
 ---
 
-**Conclusión**: el proyecto implementa las capas de seguridad esperadas para
+Conclusión: el proyecto implementa las capas de seguridad esperadas para
 una prueba técnica (autenticación, autorización, validación, secretos,
 transporte). Los hallazgos son limitaciones conscientes documentadas, salvo
 el healthcheck del backend (H1, corregible en minutos) y el RLS de Supabase
