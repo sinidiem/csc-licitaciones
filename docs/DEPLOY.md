@@ -16,9 +16,8 @@ GitHub Actions opcional al subir el repo).
   (elegir "Direct"; el contenedor siempre activo no necesita pooler). Si
   no se recuerda la contraseña del rol, "Reset database password".
 3. Código accesible para Render (elige UNA):
-  - (A, recomendada si GitHub sigue "casi al final") Docker Hub:
-  cuenta en hub.docker.com; empujar la imagen construida localmente.
-  - (B, con GitHub) subir el repo a GitHub, conectar la cuenta y usar
+  - A. Docker Hub: cuenta en hub.docker.com; empujar la imagen construida localmente.
+  - B. Subir el repo a GitHub, conectar la cuenta y usar
   `render.yaml` (blueprint) o crear el web service desde el repo.
 
 ## 1. Verificar la imagen ANTES de tocar Render (local)
